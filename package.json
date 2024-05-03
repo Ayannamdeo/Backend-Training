@@ -1,0 +1,17 @@
+{
+  "name": "backend-training",
+  "version": "1.0.0",
+  "description": "node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./assignments/Assignment1/index.js",
+    "dev": "nodemon ./assignments/Assignment1/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "readline-sync": "^1.4.10"
+  }
+}
