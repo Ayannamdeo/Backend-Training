@@ -5,14 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./assignments/Assignment1/index.js",
-    "dev": "nodemon ./assignments/Assignment1/index.js"
+    "start": "node ./start.js",
+    "dev": "nodemon ./start.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cookie-parser": "^1.4.6",
     "express": "^4.19.2",
+    "geoip-lite": "^1.4.10",
+    "joi": "^17.13.1",
     "lodash": "^4.17.21",
     "readline-sync": "^1.4.10"
   }
