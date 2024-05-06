@@ -1,0 +1,12 @@
+
+GET: /getAuthorized request recieved at 1714954885216
+GET: / request recieved at 1714954885234
+GET: / request recieved at 1714954890787
+GET: / request recieved at 1714954898207
+GET: /getAuthorized request recieved at 1714954908791
+GET: / request recieved at 1714954908804
+GET: / request recieved at 1714954911112
+GET: / request recieved at 1714954933636
+GET: /getAuthorized request recieved at 1714954950945
+GET: / request recieved at 1714954950957
+POST: / request recieved at 1714954955147
