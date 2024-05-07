@@ -10,3 +10,4 @@ GET: / request recieved at 1714954933636
 GET: /getAuthorized request recieved at 1714954950945
 GET: / request recieved at 1714954950957
 POST: / request recieved at 1714954955147
+GET: / request recieved at 1715067855575
