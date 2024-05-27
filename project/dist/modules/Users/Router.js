@@ -12,7 +12,7 @@ class User_Router_Class {
     //Role based authorization
     constructor() {
         this.router = express_1.default.Router();
-        this.UserControllers = new Controllers_1.UserControllers();
+        this.userControllers = new Controllers_1.UserControllers();
         this.setupRoutes();
     }
     static getInstance() {
@@ -22,15 +22,15 @@ class User_Router_Class {
         return this.instace;
     }
     setupRoutes() {
-        this.router.post("/register", userValidation_1.UserValidation.register, this.UserControllers.register);
-        this.router.post("/login", userValidation_1.UserValidation.login, this.UserControllers.login);
+        this.router.post("/register", userValidation_1.UserValidation.register, this.userControllers.register);
+        this.router.post("/login", userValidation_1.UserValidation.login, this.userControllers.login);
         this.router.get("/", authMiddleware_1.AuthMiddleware.restrictTo(["NORMAL", "ADMIN"]), (req, res) => {
             return res
                 .status(200)
                 .json({ message: "Accessible by admins and normal users alike" });
         });
-        this.router.get("/admin", authMiddleware_1.AuthMiddleware.authenticate, authMiddleware_1.AuthMiddleware.restrictTo(["ADMIN"]), this.UserControllers.getAllUsers);
-        this.router.delete("/admin/:id", authMiddleware_1.AuthMiddleware.authenticate, authMiddleware_1.AuthMiddleware.restrictTo(["ADMIN"]), this.UserControllers.deleteUser);
+        this.router.get("/admin", authMiddleware_1.AuthMiddleware.authenticate, authMiddleware_1.AuthMiddleware.restrictTo(["ADMIN"]), this.userControllers.getAllUsers);
+        this.router.delete("/admin/:id", authMiddleware_1.AuthMiddleware.authenticate, authMiddleware_1.AuthMiddleware.restrictTo(["ADMIN"]), this.userControllers.deleteUser);
     }
 }
 const UserRouter = User_Router_Class.getInstance().router;
