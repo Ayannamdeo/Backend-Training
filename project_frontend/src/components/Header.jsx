@@ -3,17 +3,18 @@ import { useNavigate , Link} from "react-router-dom";
 import { Mycontext } from "../store/CreateContext";
 
 const navItemsInfo = [
-  { name: "Home" },
-  { name: "Blogs" },
-  { name: "MyPosts" },
+  { name: "Home", link: "/" },
+  { name: "Blogs", link: "/blogs" },
+  { name: "MyPosts", link: "/myposts"},
+  { name: "CreateBlog", link: "/create" },
   // { name: "About" },
 ];
 
-const NavItem = ({ name }) => {
+const NavItem = ({ name , link}) => {
   console.log("name:", name);
   return (
     <li className=" relative group">
-      <Link to="/" className="px-4 py-2">
+      <Link to={link} className="px-4 py-2">
         {name}
       </Link>
       <span className="text-blue-500 absolute transition-all duration-500 font-bold right-0 top-0 group-hover:right-[90%] opacity-0 group-hover:opacity-100">
@@ -35,7 +36,7 @@ const Header = () => {
   const handleSignOut = () => {
 sessionStorage.removeItem("JWT");
   sessionStorage.removeItem("tokenExpiry");
-  setIsAuth(false);
+  setIsAuth(prevS => !prevS);
   navigate("/login");
   }
 
@@ -50,7 +51,7 @@ sessionStorage.removeItem("JWT");
         <div className="flex gap-x-9 items-center">
           <ul className="flex gap-x-2 font-semibold ">
             {navItemsInfo.map((item) => ( 
-              <NavItem key={item.name} name={item.name}/>
+              <NavItem key={item.name} name={item.name} link={item.link}/>
              ))}
           </ul>
           {isAuth ?

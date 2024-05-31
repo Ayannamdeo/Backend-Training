@@ -37,5 +37,10 @@ class BlogRepository {
             return yield ModelSchema_1.blogModel.findByIdAndDelete(id);
         });
     }
+    getByUser(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield ModelSchema_1.blogModel.find({ user: userId });
+        });
+    }
 }
 exports.BlogRepository = BlogRepository;

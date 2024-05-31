@@ -5,6 +5,9 @@ const blogSchema: mongoose.Schema<IBlog> = new mongoose.Schema<IBlog>(
   {
     title: { type: String, required: true },
     body: { type: String, required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true }, 
+    userName:{type: String, required: true},
+    imageUrl: { type: String, required: true },
   },
   { timestamps: true },
 );

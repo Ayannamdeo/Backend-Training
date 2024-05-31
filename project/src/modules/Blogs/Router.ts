@@ -34,6 +34,9 @@ class Blog_Router_Class {
     this.router.put("/:id", this.blogControllers.updateContent);
 
     this.router.delete("/:id", this.blogControllers.deleteContent);
+
+    this.router.get("/userblogs/:userid", this.blogControllers.getUserBlogs);
+
   }
 }
 const Blog_Router_Class_instance: Blog_Router_Class =

@@ -16,11 +16,12 @@ import { EditBlog } from "./pages/editArticle/EditBlog";
 function App() {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [userId, setUserId] = useState("");
   const [isAuth, setIsAuth] = useState(false);
 
   return (
     <>
-    <Mycontext.Provider value={{userName, setUserName, userEmail, setUserEmail, isAuth, setIsAuth}}>
+    <Mycontext.Provider value={{userName, setUserName, userEmail, setUserEmail, isAuth, setIsAuth, userId, setUserId}}>
     <div>
       <Routes>
         {/* <Route path="/" element={<HomePage />} /> */}
@@ -39,7 +40,7 @@ function App() {
           <Route path="/create/" element={<CreateBlog />}/>
         </Route>
 
-        <Route path="/edit/" element={<Privateroutes isAuth={isAuth}/>} >
+        <Route path="/edit/:id" element={<Privateroutes isAuth={isAuth}/>} >
           <Route path="/edit/:id" element={<EditBlog />}/>
         </Route>
 

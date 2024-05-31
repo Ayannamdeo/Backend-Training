@@ -19,11 +19,15 @@ class BlogService {
     return await this.blogRepository.create(data);
   };
 
-  updateContent = async (id: number, data: IBlog): Promise<IBlog | null> => {
+  updateContent = async (id: string, data: IBlog): Promise<IBlog | null> => {
     return await this.blogRepository.update(id, data);
   };
-  deleteContent = async (id: number): Promise<any> => {
+  deleteContent = async (id: string): Promise<any> => {
     return await this.blogRepository.delete(id);
+  };
+
+  getUserBlogs = async (userId: string): Promise<IBlog[] | null> => {
+    return await this.blogRepository.getByUser(userId);
   };
 }
 

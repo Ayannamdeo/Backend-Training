@@ -56,6 +56,7 @@ class UserControllers {
                     token: token,
                     email: existingUser.email,
                     name: existingUser.name,
+                    id: existingUser._id,
                     expiresIn: 15 * 60,
                 });
                 // res.redirect("/CRUD");

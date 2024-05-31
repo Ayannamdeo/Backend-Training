@@ -43,8 +43,8 @@ export function ArticleDetailPage() {
           <BreadCrumbs breadData={breadData} />
           <img
             className="rounded-xl w-full"
-            src="https://images.pexels.com/photos/1132558/pexels-photo-1132558.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            alt="asdfasdf"
+            src={data.imageUrl}
+            alt={data.title}
           />
           <h1 className="text-xl font-medium mt-4 text-slate-800">
             {data.title}

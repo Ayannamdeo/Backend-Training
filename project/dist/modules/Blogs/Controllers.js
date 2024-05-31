@@ -50,6 +50,7 @@ class BlogControllers {
         });
         this.createContent = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
+                console.log(req.body);
                 const createdContent = yield this.blogService.createContent(req.body);
                 res.status(201).json(createdContent);
             }
@@ -60,7 +61,7 @@ class BlogControllers {
         });
         this.updateContent = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const updatedContent = yield this.blogService.updateContent(parseInt(req.params.id, 10), req.body);
+                const updatedContent = yield this.blogService.updateContent(req.params.id, req.body);
                 if (!updatedContent) {
                     logger_1.logger.warn("ID not found");
                     res.status(404).json({ message: "ID not found" });
@@ -74,12 +75,28 @@ class BlogControllers {
         });
         this.deleteContent = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const deletedContent = yield this.blogService.deleteContent(parseInt(req.params.id, 10));
+                const deletedContent = yield this.blogService.deleteContent(req.params.id);
                 res.status(200).json(deletedContent);
             }
             catch (err) {
                 logger_1.logger.error("error in deleteContent Api", err);
                 res.status(500).json({ message: err.message });
+            }
+        });
+        this.getUserBlogs = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const userBlogs = yield this.blogService.getUserBlogs(req.params.userid);
+                if (!userBlogs || userBlogs.length === 0) {
+                    logger_1.logger.warn("No blogs found for this user");
+                    res.status(404).json({ message: "No blogs found for this user" });
+                }
+                else {
+                    res.status(200).json(userBlogs);
+                }
+            }
+            catch (error) {
+                logger_1.logger.error("error in getUserBlogs Api", error);
+                res.status(500).json({ message: error.message });
             }
         });
         this.blogService = new Services_1.BlogService();

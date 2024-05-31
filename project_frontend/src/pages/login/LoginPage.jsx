@@ -13,7 +13,7 @@ export function LoginPage({ setIsAuth }) {
   //if (already logged) in redirect to home page
   //....
   const navigate = useNavigate();
-  const { setUserName, setUserEmail } = useContext(Mycontext);
+  const { setUserName, setUserEmail, setUserId} = useContext(Mycontext);
 
   const { mutate, isLoading } = useMutation({
     mutationFn: ({ email, password }) => {
@@ -28,6 +28,7 @@ export function LoginPage({ setIsAuth }) {
 
       setUserName(data.name);
       setUserEmail(data.email);
+      setUserId(data.id);
       setIsAuth(true);
 
       navigate("/blogs");

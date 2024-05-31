@@ -44,6 +44,8 @@ class BlogControllers {
 
   createContent = async (req: Request, res: Response): Promise<void> => {
     try {
+      console.log(req.body);
+      
       const createdContent = await this.blogService.createContent(req.body);
       res.status(201).json(createdContent);
     } catch (error: any) {
@@ -55,7 +57,7 @@ class BlogControllers {
   updateContent = async (req: Request, res: Response): Promise<void> => {
     try {
       const updatedContent = await this.blogService.updateContent(
-        parseInt(req.params.id, 10),
+        req.params.id,
         req.body,
       );
       if (!updatedContent) {
@@ -72,12 +74,27 @@ class BlogControllers {
   deleteContent = async (req: Request, res: Response): Promise<void> => {
     try {
       const deletedContent = await this.blogService.deleteContent(
-        parseInt(req.params.id, 10),
+        req.params.id,
       );
       res.status(200).json(deletedContent);
     } catch (err: any) {
       logger.error("error in deleteContent Api", err);
       res.status(500).json({ message: err.message });
+    }
+  };
+
+  getUserBlogs = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const userBlogs = await this.blogService.getUserBlogs(req.params.userid);
+      if (!userBlogs || userBlogs.length === 0) {
+        logger.warn("No blogs found for this user");
+        res.status(404).json({ message: "No blogs found for this user" });
+      } else {
+        res.status(200).json(userBlogs);
+      }
+    } catch (error: any) {
+      logger.error("error in getUserBlogs Api", error);
+      res.status(500).json({ message: error.message });
     }
   };
 }

@@ -11,11 +11,15 @@ class BlogRepository {
   async create(data: IBlog): Promise<IBlog> {
     return await blogModel.create(data);
   }
-  async update(id: number, data: IBlog): Promise<IBlog | null> {
+  async update(id: string, data: IBlog): Promise<IBlog | null> {
     return await blogModel.findByIdAndUpdate(id, data, { new: true });
   }
-  async delete(id: number): Promise<any> {
+  async delete(id: string): Promise<any> {
     return await blogModel.findByIdAndDelete(id);
+  }
+  
+  async getByUser(userId: string): Promise<IBlog[] | null> {
+    return await blogModel.find({ user: userId });
   }
 }
 

@@ -28,6 +28,9 @@ class BlogService {
         this.deleteContent = (id) => __awaiter(this, void 0, void 0, function* () {
             return yield this.blogRepository.delete(id);
         });
+        this.getUserBlogs = (userId) => __awaiter(this, void 0, void 0, function* () {
+            return yield this.blogRepository.getByUser(userId);
+        });
         this.blogRepository = new repositories_1.BlogRepository();
     }
 }
