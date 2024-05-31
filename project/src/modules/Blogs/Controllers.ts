@@ -28,9 +28,8 @@ class BlogControllers {
   };
   getContentById = async (req: Request, res: Response): Promise<void> => {
     try {
-      const content = await this.blogService.getContentById(
-        parseInt(req.params.id, 10),
-      );
+      
+      const content = await this.blogService.getContentById( req.params.id);
       if (!content) {
         logger.warn("content not found");
         res.status(404).json({ message: "content not found" });

@@ -15,13 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Server = void 0;
 const express_1 = __importDefault(require("express"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
-const helmet_1 = __importDefault(require("helmet"));
+const cors_1 = __importDefault(require("cors"));
 const DB_Connection_1 = require("./lib/db/DB_Connection");
 const routes_1 = __importDefault(require("./routes/routes"));
 const logger_1 = require("./lib/helpers/logger");
 const reqLogger_1 = require("./lib/middlewares/reqLogger");
 class Server {
     constructor(config) {
+        // private configureErrorHandler(): void {
+        //   this.app.use(errorHandler);
+        // }
         this.connectDB = () => __awaiter(this, void 0, void 0, function* () {
             yield this.db.connect().catch((err) => console.log(err));
         });
@@ -49,10 +52,12 @@ class Server {
     bootstrap() {
         this.configureMiddlewares();
         this.configureRoutes();
+        // this.configureErrorHandler();
     }
     configureMiddlewares() {
         this.app.use(reqLogger_1.ReqLoggger.LogHTTP);
-        this.app.use((0, helmet_1.default)());
+        this.app.use((0, cors_1.default)());
+        // this.app.use(helmet());
         this.app.use(express_1.default.json());
         this.app.use((0, cookie_parser_1.default)());
     }

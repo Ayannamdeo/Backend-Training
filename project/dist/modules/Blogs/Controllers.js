@@ -34,7 +34,7 @@ class BlogControllers {
         });
         this.getContentById = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const content = yield this.blogService.getContentById(parseInt(req.params.id, 10));
+                const content = yield this.blogService.getContentById(req.params.id);
                 if (!content) {
                     logger_1.logger.warn("content not found");
                     res.status(404).json({ message: "content not found" });

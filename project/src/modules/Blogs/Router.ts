@@ -26,9 +26,7 @@ class Blog_Router_Class {
 
   private setupRoutes(): void {
     this.router.get("/", this.blogControllers.getAllContent);
-    //    this.router.get("/", (req: Request, res: Response) => {
-    //      this.CRUD_Controllers.getAllContent(req, res);
-    //    });
+    
     this.router.get("/:id", this.blogControllers.getContentById);
 
     this.router.post("/", this.blogControllers.createContent);

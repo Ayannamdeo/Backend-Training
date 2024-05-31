@@ -9,7 +9,7 @@ UserValidation.register = (req, res, next) => {
     if (Object.keys(newUser).length === 0) {
         res.status(400).json({ message: "User must be passed" });
     }
-    if (!newUser._id || !newUser.name || !newUser.email || !newUser.password) {
+    if (!newUser.name || !newUser.email || !newUser.password) {
         res.status(400).json({ message: "User Fields are missing, provide all fields." });
     }
     next();

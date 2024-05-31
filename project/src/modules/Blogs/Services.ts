@@ -12,7 +12,7 @@ class BlogService {
   getAllContent = async (): Promise<IBlog[] | null> => {
     return await this.blogRepository.getAll();
   };
-  getContentById = async (id: number): Promise<IBlog | null> => {
+  getContentById = async (id: string): Promise<IBlog | null> => {
     return await this.blogRepository.getById(id);
   };
   createContent = async (data: IBlog): Promise<IBlog> => {

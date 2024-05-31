@@ -37,6 +37,7 @@ class UserControllers {
   login = async (req: Request, res: Response): Promise<void> => {
     try {
       const user: IUserLogin = req.body;
+      // console.log(req.body);
 
       const existingUser: IUser | null = await this.userServices.getUserByEmail(
         user.email,
@@ -59,9 +60,16 @@ class UserControllers {
         serverConfig.jwtSecret,
       );
       logger.debug("token", token);
-      res.cookie("JWT_Token", token);
+      // res.cookie("JWT_Token", token);
       // res.status(200).send("CHECKPOINT");
-      res.redirect("/CRUD");
+      res.status(200).json({
+        token: token,
+        email: existingUser.email,
+        name: existingUser.name,
+        expiresIn: 15*60,
+      });
+
+      // res.redirect("/CRUD");
     } catch (error: any) {
       logger.error("error occurrd while loggin in:", error);
       res

@@ -5,7 +5,7 @@ class BlogRepository {
   async getAll(): Promise<IBlog[] | null> {
     return await blogModel.find();
   }
-  async getById(id: number): Promise<IBlog | null> {
+  async getById(id: string): Promise<IBlog | null> {
     return await blogModel.findById(id);
   }
   async create(data: IBlog): Promise<IBlog> {

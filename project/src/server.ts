@@ -1,12 +1,13 @@
-import express, { Application } from 'express';
-import cookieParser from 'cookie-parser';
-import helmet from 'helmet';
+import express, { Application } from "express";
+import cookieParser from "cookie-parser";
+import helmet from "helmet";
+import cors from "cors";
 
-import { IServerConfig } from './config';
-import { DB_Connection } from './lib/db/DB_Connection';
-import router from './routes/routes';
-import { logger } from './lib/helpers/logger';
-import { ReqLoggger } from './lib/middlewares/reqLogger';
+import { IServerConfig } from "./config";
+import { DB_Connection } from "./lib/db/DB_Connection";
+import router from "./routes/routes";
+import { logger } from "./lib/helpers/logger";
+import { ReqLoggger } from "./lib/middlewares/reqLogger";
 
 class Server {
   private static instance: Server;
@@ -31,11 +32,13 @@ class Server {
   private bootstrap(): void {
     this.configureMiddlewares();
     this.configureRoutes();
+    // this.configureErrorHandler();
   }
 
   private configureMiddlewares(): void {
     this.app.use(ReqLoggger.LogHTTP);
-    this.app.use(helmet());
+    this.app.use(cors());
+    // this.app.use(helmet());
     this.app.use(express.json());
     this.app.use(cookieParser());
   }
@@ -44,22 +47,26 @@ class Server {
     this.app.use(router);
   }
 
-  connectDB = async (): Promise<void> =>{
+  // private configureErrorHandler(): void {
+  //   this.app.use(errorHandler);
+  // }
+
+  connectDB = async (): Promise<void> => {
     await this.db.connect().catch((err) => console.log(err));
-  }
+  };
 
-  disconnectDB = async (): Promise<void> =>{
+  disconnectDB = async (): Promise<void> => {
     await this.db.disconnect().catch((err) => console.log(err));
-  }
+  };
 
-  run = async (): Promise<void> =>{
+  run = async (): Promise<void> => {
     await this.connectDB();
     logger.info("after connectDB");
 
     this.app.listen(this.config.port, () => {
       logger.info(`Node server started at port: ${this.config.port}`);
     });
-  }
+  };
 }
 
-export {Server};
+export { Server };

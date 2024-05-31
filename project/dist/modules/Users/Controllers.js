@@ -37,6 +37,7 @@ class UserControllers {
         this.login = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = req.body;
+                // console.log(req.body);
                 const existingUser = yield this.userServices.getUserByEmail(user.email);
                 if (!existingUser) {
                     res.status(404).json({ message: "No user found for current Email" });
@@ -49,9 +50,15 @@ class UserControllers {
                 }
                 const token = Services_1.UserServices.generateToken(existingUser, config_1.serverConfig.jwtSecret);
                 logger_1.logger.debug("token", token);
-                res.cookie("JWT_Token", token);
+                // res.cookie("JWT_Token", token);
                 // res.status(200).send("CHECKPOINT");
-                res.redirect("/CRUD");
+                res.status(200).json({
+                    token: token,
+                    email: existingUser.email,
+                    name: existingUser.name,
+                    expiresIn: 15 * 60,
+                });
+                // res.redirect("/CRUD");
             }
             catch (error) {
                 logger_1.logger.error("error occurrd while loggin in:", error);

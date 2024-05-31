@@ -43,6 +43,6 @@ UserServices.verifyPassword = (currentUser, existingUser) => __awaiter(void 0, v
 });
 UserServices.generateToken = (existingUser, jwtsecret) => {
     return jsonwebtoken_1.default.sign({ userId: existingUser.name, role: existingUser.role }, jwtsecret, {
-        expiresIn: 100,
+        expiresIn: 60 * 15,
     });
 };
