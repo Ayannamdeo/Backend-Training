@@ -46,7 +46,7 @@ class UserServices {
       { userId: existingUser.name, role: existingUser.role },
       jwtsecret,
       {
-        expiresIn: 60*15,
+        expiresIn: 60 * 15,
       },
     );
   };

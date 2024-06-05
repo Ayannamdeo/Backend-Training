@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
+
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import app from '../../firebase';
 import { MainLayout } from '../../components/MainLayout';
 import { getSingleBlogPost, updateBlogPost } from '../../services/blog';
+import { deleteBlogPost } from '../../services/blog';
 
 export const EditBlog = () => {
   const { id } = useParams();
   const [imageUrl, setImageUrl] = useState("");
-  const [isUploading, setIsUploading] = useState(false);
+  const [imageUploaded, setimageUploaded] = useState(false);
   const navigate = useNavigate();
+
+  const [dummy, setdummy] = useState(false);
 
   const { register, handleSubmit, setValue, formState: { errors, isValid }, } = useForm({
     defaultValues: { title: "", body: "", },
@@ -28,7 +32,7 @@ export const EditBlog = () => {
     },
   });
 
-  const { mutate  } = useMutation({
+  const updateMutation = useMutation({
     mutationFn: ({ title, body, imageUrl }) => {
       return updateBlogPost({ id, title, body, imageUrl });
     },
@@ -41,12 +45,24 @@ export const EditBlog = () => {
     },
   });
 
+
+  const deleteMutation = useMutation({
+    mutationFn: () => deleteBlogPost({ id }),
+    onSuccess: () => {
+      toast.success("Blog post updated successfully!");
+      navigate("/myposts");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
   const uploadImage = async (file) => {
     const storage = getStorage(app);
     const imageRef = ref(storage, `images/${file.name}`);
     const uploadTask = uploadBytesResumable(imageRef, file);
 
-    setIsUploading(true);
+    // setIsUploading(true);
 
     uploadTask.on(
       "state_changed",
@@ -56,14 +72,14 @@ export const EditBlog = () => {
       },
       (error) => {
         console.log("Error during upload:", error);
-        setIsUploading(false);
+        setimageUploaded(false);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImageUrl(downloadURL);
-          setIsUploading(prevS => !prevS);
+          setimageUploaded(true);
           console.log("File available at", downloadURL);
-          console.log(isUploading);
+          console.log(imageUploaded);
         });
       }
     );
@@ -80,14 +96,18 @@ export const EditBlog = () => {
     if (data) {
       setValue("title", data.title);
       setValue("body", data.body);
-      setImageUrl(data.imageUrl); 
+      setImageUrl(data.imageUrl);
     }
   }, [data, setValue]);
 
   const submitHandler = (data) => {
     const { title, body } = data;
     console.log("imageUrl", imageUrl);
-    mutate({ title, body, imageUrl });
+    updateMutation.mutate({ title, body, imageUrl });
+  };
+
+  const handleDelete = () => {
+    deleteMutation.mutate();
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -113,9 +133,8 @@ export const EditBlog = () => {
                 },
               })}
               placeholder="Enter Title"
-              className={`w-full p-2 border rounded ${
-                errors.title ? "border-red-500" : "border-[#c3cad9]"
-              }`}
+              className={`w-full p-2 border rounded ${errors.title ? "border-red-500" : "border-[#c3cad9]"
+                }`}
             />
             {errors.title?.message && (
               <p className="text-red-500 text-xs mt-1 ">
@@ -137,9 +156,8 @@ export const EditBlog = () => {
                 },
               })}
               placeholder="Enter Body"
-              className={`w-full p-2 border rounded ${
-                errors.body ? "border-red-500" : "border-[#c3cad9]"
-              }`}
+              className={`w-full p-2 border rounded ${errors.body ? "border-red-500" : "border-[#c3cad9]"
+                }`}
             ></textarea>
             {errors.body?.message && (
               <p className="text-red-500 text-xs mt-1 ">
@@ -159,10 +177,24 @@ export const EditBlog = () => {
 
           <button
             type="submit"
-            // disabled={!isValid || isUploading}
-            className=" bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+            disabled={!isValid}
+            // disabled={!imageUploaded || !isValid}
+            className="disabled:opacity-70 disabled:cursor-not-allowed bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
           >
-            Update
+            Update Content
+          </button>
+          <button disabled={!imageUploaded}
+            className="  mx-4 disabled:opacity-70 disabled:cursor-not-allowed bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+          >Update Image
+          </button>
+
+
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded ml-4"
+          >
+            Delete
           </button>
         </form>
       </div>

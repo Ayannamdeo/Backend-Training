@@ -53,6 +53,7 @@ class UserControllers {
       );
       if (!comparePassword) {
         res.status(401).json({ message: "Invalid Credentials" });
+        return;
       }
 
       const token: string = UserServices.generateToken(
@@ -67,7 +68,7 @@ class UserControllers {
         email: existingUser.email,
         name: existingUser.name,
         id: existingUser._id,
-        expiresIn: 15*60,
+        // expiresIn: 15,
       });
 
       // res.redirect("/CRUD");

@@ -47,6 +47,7 @@ class UserControllers {
                 const comparePassword = yield Services_1.UserServices.verifyPassword(user, existingUser);
                 if (!comparePassword) {
                     res.status(401).json({ message: "Invalid Credentials" });
+                    return;
                 }
                 const token = Services_1.UserServices.generateToken(existingUser, config_1.serverConfig.jwtSecret);
                 logger_1.logger.debug("token", token);
@@ -57,7 +58,7 @@ class UserControllers {
                     email: existingUser.email,
                     name: existingUser.name,
                     id: existingUser._id,
-                    expiresIn: 15 * 60,
+                    // expiresIn: 15,
                 });
                 // res.redirect("/CRUD");
             }

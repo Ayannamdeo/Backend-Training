@@ -1,4 +1,5 @@
 import { BlogControllers } from "./Controllers";
+
 import express, { Request, Response, Router } from "express";
 import { AuthMiddleware } from "../../lib/middlewares/authMiddleware";
 
@@ -26,7 +27,7 @@ class Blog_Router_Class {
 
   private setupRoutes(): void {
     this.router.get("/", this.blogControllers.getAllContent);
-    
+
     this.router.get("/:id", this.blogControllers.getContentById);
 
     this.router.post("/", this.blogControllers.createContent);
@@ -37,6 +38,12 @@ class Blog_Router_Class {
 
     this.router.get("/userblogs/:userid", this.blogControllers.getUserBlogs);
 
+    this.router.get(
+      "/count/documentcount",
+      this.blogControllers.getDocumentCount,
+    );
+
+    this.router.post("/likeunlike/:id", this.blogControllers.likeUnlikeContent);
   }
 }
 const Blog_Router_Class_instance: Blog_Router_Class =
@@ -44,4 +51,3 @@ const Blog_Router_Class_instance: Blog_Router_Class =
 const BlogRouter = Blog_Router_Class_instance.router;
 
 export { BlogRouter };
-

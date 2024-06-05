@@ -19,6 +19,7 @@ export function ArticleDetailPage() {
   const { data, isLoading, isError, error } = useQuery({
     queryFn: () => getSingleBlogPost({ id }),
     queryKey: ["posts", id],
+    retry: false,
     onError: (error) => {
       toast.error(error.message);
       console.log(error);

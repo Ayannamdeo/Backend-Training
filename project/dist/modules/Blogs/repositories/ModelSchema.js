@@ -11,6 +11,7 @@ const blogSchema = new mongoose_1.default.Schema({
     user: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "user", required: true },
     userName: { type: String, required: true },
     imageUrl: { type: String, required: true },
+    likes: [{ type: mongoose_1.default.Schema.Types.ObjectId, ref: "user" }],
 }, { timestamps: true });
 const blogModel = mongoose_1.default.model("blog", blogSchema);
 exports.blogModel = blogModel;

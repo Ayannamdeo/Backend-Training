@@ -13,8 +13,8 @@ exports.BlogService = void 0;
 const repositories_1 = require("./repositories");
 class BlogService {
     constructor() {
-        this.getAllContent = () => __awaiter(this, void 0, void 0, function* () {
-            return yield this.blogRepository.getAll();
+        this.getAllContent = (offset, limit, sort) => __awaiter(this, void 0, void 0, function* () {
+            return yield this.blogRepository.getAll(offset, limit, sort);
         });
         this.getContentById = (id) => __awaiter(this, void 0, void 0, function* () {
             return yield this.blogRepository.getById(id);
@@ -30,6 +30,14 @@ class BlogService {
         });
         this.getUserBlogs = (userId) => __awaiter(this, void 0, void 0, function* () {
             return yield this.blogRepository.getByUser(userId);
+        });
+        this.getDocCount = () => __awaiter(this, void 0, void 0, function* () {
+            return yield this.blogRepository.docCount();
+        });
+        this.likeUnlikeBlog = (userId, postId) => __awaiter(this, void 0, void 0, function* () {
+            console.log("userId inside likeUnlikeBlog service", userId);
+            console.log("postId inside likeUnlikeBlog service", postId);
+            return yield this.blogRepository.likeUnlike(userId, postId);
         });
         this.blogRepository = new repositories_1.BlogRepository();
     }

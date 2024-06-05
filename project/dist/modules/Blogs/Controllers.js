@@ -16,9 +16,12 @@ class BlogControllers {
     constructor() {
         this.getAllContent = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const contentList = yield this.blogService
-                    .getAllContent()
-                    .catch((err) => console.log("errrrrr", err));
+                // console.log("req.params: ", req.params);
+                // console.log("req.query: ", req.query);
+                const offset = parseInt(req.query.offset) || 0;
+                const limit = parseInt(req.query.limit) || 6;
+                const sort = req.query.sort || "createdAt";
+                const contentList = yield this.blogService.getAllContent(offset, limit, sort);
                 if (!contentList || contentList.length === 0) {
                     logger_1.logger.warn("no content in db");
                     res.status(404).json({ message: "no content in db" });
@@ -96,6 +99,40 @@ class BlogControllers {
             }
             catch (error) {
                 logger_1.logger.error("error in getUserBlogs Api", error);
+                res.status(500).json({ message: error.message });
+            }
+        });
+        this.getDocumentCount = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const docCount = yield this.blogService.getDocCount();
+                res.status(200).json(docCount);
+            }
+            catch (error) {
+                logger_1.logger.error("error in getDocumentCount Api", error);
+                res.status(500).json({ message: error.message });
+            }
+        });
+        this.likeUnlikeContent = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                console.log("likeUnlikeContent Controller Pinged");
+                console.log("req.params:", req.params);
+                console.log("req.body:", req.body);
+                const userId = req.body.userId;
+                console.log("req.params.id:", req.params.id);
+                console.log("userId:", userId);
+                const content = yield this.blogService.likeUnlikeBlog(userId, req.params.id);
+                if (!content) {
+                    logger_1.logger.warn("couldn't find blog post to like/unlike");
+                    res
+                        .status(404)
+                        .json({ message: "couldn't find blog post to like/unlike" });
+                }
+                else {
+                    res.status(200).json(content);
+                }
+            }
+            catch (error) {
+                logger_1.logger.error("error in likeUnlikeContent Api", error);
                 res.status(500).json({ message: error.message });
             }
         });

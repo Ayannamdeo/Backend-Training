@@ -8,10 +8,11 @@ import { useContext } from "react";
 import { Mycontext } from "../../store/CreateContext";
 
 export function MyPosts() {
-  const {userId} = useContext(Mycontext);
+  const { userId } = useContext(Mycontext);
   const { data, isLoading, isError, error } = useQuery({
-    queryFn: () =>getMyBlogPosts({userId}),
+    queryFn: () => getMyBlogPosts({ userId }),
     queryKey: ["myPosts"],
+    retry: false,
     onError: (error) => {
       toast.error(error.message);
       console.log(error);
@@ -26,17 +27,11 @@ export function MyPosts() {
     <MainLayout>
       <div className="bg-gradient-to-tr from-cyan-100 to-indigo-200 h-screen relative overflow-hidden">
         <section className="  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-28 py-10">
-            {isLoading ? 
-            ([1,2,3].map((item, idx) => ( 
-                <SkeletonArticleCard key={idx}/>
-             )))
-            : data.map(post => (
-                <ArticleCard key={post._id} post={post} />
-            ))}
-   
+          {isLoading
+            ? [1, 2, 3].map((item, idx) => <SkeletonArticleCard key={idx} />)
+            : data.map((post) => <ArticleCard key={post._id} post={post} showedit={true} />)}
         </section>
       </div>
     </MainLayout>
   );
 }
-

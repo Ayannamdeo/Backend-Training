@@ -13,7 +13,7 @@ export function LoginPage({ setIsAuth }) {
   //if (already logged) in redirect to home page
   //....
   const navigate = useNavigate();
-  const { setUserName, setUserEmail, setUserId} = useContext(Mycontext);
+  const { setUserName, setUserEmail, setUserId } = useContext(Mycontext);
 
   const { mutate, isLoading } = useMutation({
     mutationFn: ({ email, password }) => {
@@ -21,10 +21,10 @@ export function LoginPage({ setIsAuth }) {
     },
     onSuccess: (data) => {
       console.log(data);
-      
+
       sessionStorage.setItem("JWT", data.token);
-      const expiryTime = new Date().getTime() + data.expiresIn;
-      sessionStorage.setItem("tokenExpiry", expiryTime);
+      // const expiryTime = new Date().getTime() + data.expiresIn;
+      // sessionStorage.setItem("tokenExpiry", expiryTime);
 
       setUserName(data.name);
       setUserEmail(data.email);
@@ -88,9 +88,8 @@ export function LoginPage({ setIsAuth }) {
                   },
                 })}
                 placeholder="Enter Email "
-                className={`placeholder:text-[#959ead]  mt-3 rounded-lg p-4 font-semibold block outline-none border ${
-                  errors.email ? "border-red-500" : "border-[#c3cad9]"
-                } `}
+                className={`placeholder:text-[#959ead]  mt-3 rounded-lg p-4 font-semibold block outline-none border ${errors.email ? "border-red-500" : "border-[#c3cad9]"
+                  } `}
               />
               {errors.email?.message && (
                 <p className="text-red-500 text-xs mt-1 ">
@@ -107,7 +106,7 @@ export function LoginPage({ setIsAuth }) {
                 Password
               </label>
               <input
-                type="text"
+                type="password"
                 id="password"
                 {...register("password", {
                   minLength: {
@@ -126,9 +125,8 @@ export function LoginPage({ setIsAuth }) {
                   },
                 })}
                 placeholder="Enter Password "
-                className={`placeholder:text-[#959ead]  mt-3 rounded-lg p-4 font-semibold block outline-none border ${
-                  errors.password ? "border-red-500" : "border-[#c3cad9]"
-                } `}
+                className={`placeholder:text-[#959ead]  mt-3 rounded-lg p-4 font-semibold block outline-none border ${errors.password ? "border-red-500" : "border-[#c3cad9]"
+                  } `}
               />
               {errors.password?.message && (
                 <p className="text-red-500 text-xs mt-1 ">
@@ -146,7 +144,7 @@ export function LoginPage({ setIsAuth }) {
             </button>
 
             <p className="text-sm font-semibold text-[#5a7184]">
-              Don't have an account? {"  "}
+              Don't have an account
               <Link to="/register" className="text-blue-600">
                 Register
               </Link>

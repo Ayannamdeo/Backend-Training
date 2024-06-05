@@ -9,16 +9,20 @@ class BlogService {
     this.blogRepository = new BlogRepository();
   }
 
-  getAllContent = async (): Promise<IBlog[] | null> => {
-    return await this.blogRepository.getAll();
+  getAllContent = async (
+    offset: number,
+    limit: number,
+    sort: string,
+  ): Promise<IBlog[] | null> => {
+    return await this.blogRepository.getAll(offset, limit, sort);
   };
+
   getContentById = async (id: string): Promise<IBlog | null> => {
     return await this.blogRepository.getById(id);
   };
   createContent = async (data: IBlog): Promise<IBlog> => {
     return await this.blogRepository.create(data);
   };
-
   updateContent = async (id: string, data: IBlog): Promise<IBlog | null> => {
     return await this.blogRepository.update(id, data);
   };
@@ -29,7 +33,19 @@ class BlogService {
   getUserBlogs = async (userId: string): Promise<IBlog[] | null> => {
     return await this.blogRepository.getByUser(userId);
   };
+
+  getDocCount = async (): Promise<number> => {
+    return await this.blogRepository.docCount();
+  };
+
+  likeUnlikeBlog = async (
+    userId: string,
+    postId: string,
+  ): Promise<IBlog | null> => {
+    console.log("userId inside likeUnlikeBlog service", userId);
+    console.log("postId inside likeUnlikeBlog service", postId);
+    return await this.blogRepository.likeUnlike(userId, postId);
+  };
 }
 
 export { BlogService };
-

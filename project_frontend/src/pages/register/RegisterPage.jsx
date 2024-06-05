@@ -1,6 +1,6 @@
-import { Link , useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import {useMutation} from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 import { MainLayout } from "../../components/MainLayout";
@@ -10,11 +10,11 @@ import { signup } from "../../services/user";
 export function RegisterPage() {
   const navigate = useNavigate();
 
-  const {mutate, isLoading} = useMutation({
-    mutationFn: ({name, email, password}) => {
-      return signup({name, email, password});
+  const { mutate, isLoading } = useMutation({
+    mutationFn: ({ name, email, password }) => {
+      return signup({ name, email, password });
     },
-    onSuccess: (data)=>{
+    onSuccess: (data) => {
       console.log(data);
       // localStorage.setItem("")
       navigate("/login");
@@ -32,15 +32,14 @@ export function RegisterPage() {
 
   const submitHandler = (data) => {
     console.log(data);
-    const {name, email, password} = data;
-    mutate({name, email, password});
+    const { name, email, password } = data;
+    mutate({ name, email, password });
   };
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    watch,
   } = useForm({
     defaultValues: {
       name: "",
@@ -79,9 +78,8 @@ export function RegisterPage() {
                   },
                 })}
                 placeholder="Enter Name"
-                className={`placeholder:text-[#959ead]  mt-3 rounded-lg p-4 font-semibold block outline-none border ${
-                  errors.name ? "border-red-500" : "border-[#c3cad9]"
-                } `}
+                className={`placeholder:text-[#959ead]  mt-3 rounded-lg p-4 font-semibold block outline-none border ${errors.name ? "border-red-500" : "border-[#c3cad9]"
+                  } `}
               />
               {errors.name?.message && (
                 <p className="text-red-500 text-xs mt-1 ">
@@ -112,9 +110,8 @@ export function RegisterPage() {
                   },
                 })}
                 placeholder="Enter Email "
-                className={`placeholder:text-[#959ead]  mt-3 rounded-lg p-4 font-semibold block outline-none border ${
-                  errors.email ? "border-red-500" : "border-[#c3cad9]"
-                } `}
+                className={`placeholder:text-[#959ead]  mt-3 rounded-lg p-4 font-semibold block outline-none border ${errors.email ? "border-red-500" : "border-[#c3cad9]"
+                  } `}
               />
               {errors.email?.message && (
                 <p className="text-red-500 text-xs mt-1 ">
@@ -131,7 +128,7 @@ export function RegisterPage() {
                 Password
               </label>
               <input
-                type="text"
+                type="password"
                 id="password"
                 {...register("password", {
                   minLength: {
@@ -150,9 +147,8 @@ export function RegisterPage() {
                   },
                 })}
                 placeholder="Enter Password "
-                className={`placeholder:text-[#959ead]  mt-3 rounded-lg p-4 font-semibold block outline-none border ${
-                  errors.password ? "border-red-500" : "border-[#c3cad9]"
-                } `}
+                className={`placeholder:text-[#959ead]  mt-3 rounded-lg p-4 font-semibold block outline-none border ${errors.password ? "border-red-500" : "border-[#c3cad9]"
+                  } `}
               />
               {errors.password?.message && (
                 <p className="text-red-500 text-xs mt-1 ">

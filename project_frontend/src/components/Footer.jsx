@@ -1,4 +1,6 @@
-export function Footer() {
+import React from "react";
+
+const Footer = () => {
   console.log("footer called");
   return (
     <div>
@@ -8,3 +10,8 @@ export function Footer() {
     </div>
   );
 }
+
+
+const MemoizedFooter = React.memo(Footer);
+
+export { MemoizedFooter as Footer };
