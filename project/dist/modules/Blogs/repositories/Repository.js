@@ -42,9 +42,16 @@ class BlogRepository {
             return yield ModelSchema_1.blogModel.findByIdAndDelete(id);
         });
     }
-    getByUser(userId) {
+    getByUser(userId, sort, offset, limit) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield ModelSchema_1.blogModel.find({ user: userId });
+            const userPosts = yield ModelSchema_1.blogModel
+                .find({ user: userId })
+                .find()
+                .sort({ [sort]: -1 })
+                .skip(offset)
+                .limit(limit);
+            const totalUserPosts = yield ModelSchema_1.blogModel.countDocuments({ user: userId });
+            return { userPosts, totalUserPosts };
         });
     }
     docCount() {

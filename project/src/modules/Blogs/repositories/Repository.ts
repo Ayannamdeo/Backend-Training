@@ -28,8 +28,22 @@ class BlogRepository {
     return await blogModel.findByIdAndDelete(id);
   }
 
-  async getByUser(userId: string): Promise<IBlog[] | null> {
-    return await blogModel.find({ user: userId });
+  async getByUser(
+    userId: string,
+    sort: string,
+    offset: number,
+    limit: number,
+  ): Promise<{ userPosts: IBlog[]; totalUserPosts: number }> {
+    const userPosts = await blogModel
+      .find({ user: userId })
+      .find()
+      .sort({ [sort]: -1 })
+      .skip(offset)
+      .limit(limit);
+
+    const totalUserPosts = await blogModel.countDocuments({ user: userId });
+
+    return { userPosts, totalUserPosts };
   }
 
   async docCount(): Promise<number> {

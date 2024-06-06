@@ -88,13 +88,26 @@ class BlogControllers {
         });
         this.getUserBlogs = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const userBlogs = yield this.blogService.getUserBlogs(req.params.userid);
-                if (!userBlogs || userBlogs.length === 0) {
+                console.log("req.query inside getUserBlogs: ", req.query);
+                const offset = parseInt(req.query.offset) || 0;
+                const limit = parseInt(req.query.limit) || 6;
+                const sort = req.query.sort || "createdAt";
+                const result = yield this.blogService.getUserBlogs(req.params.userid, sort, offset, limit);
+                if (!result) {
+                    logger_1.logger.warn("No Result returned from getUserBlogs Service inside getUserBlogs Controller");
+                    res
+                        .status(404)
+                        .json({
+                        message: "No Result returned from getUserBlogs Service inside getUserBlogs Controller",
+                    });
+                }
+                const { userPosts, totalUserPosts } = result;
+                if (!userPosts || userPosts.length === 0) {
                     logger_1.logger.warn("No blogs found for this user");
                     res.status(404).json({ message: "No blogs found for this user" });
                 }
                 else {
-                    res.status(200).json(userBlogs);
+                    res.status(200).json({ userPosts, totalUserPosts });
                 }
             }
             catch (error) {

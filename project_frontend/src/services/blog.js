@@ -133,13 +133,20 @@ export const updateBlogPost = async ({ id, title, body, imageUrl }) => {
   }
 };
 
-export const getMyBlogPosts = async ({ userId }) => {
+export const getMyBlogPosts = async ({ userId, pageParam }) => {
   try {
+    console.log("userId inside getMyBlogPOsts: ", userId);
+    console.log("pageParam inside getMyBlogPOsts: ", pageParam);
     const token = getToken();
 
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
+      },
+      params: {
+        offset: pageParam,
+        limit: 6,
+        sort: "createdAt",
       },
     };
 

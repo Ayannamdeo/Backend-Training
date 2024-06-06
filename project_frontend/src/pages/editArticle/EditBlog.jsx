@@ -3,10 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
-
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import app from '../../firebase';
-import { MainLayout } from '../../components/MainLayout';
+
+import { MainLayout } from '../../components';
 import { getSingleBlogPost, updateBlogPost } from '../../services/blog';
 import { deleteBlogPost } from '../../services/blog';
 
@@ -16,7 +16,7 @@ export const EditBlog = () => {
   const [imageUploaded, setimageUploaded] = useState(false);
   const navigate = useNavigate();
 
-  const [dummy, setdummy] = useState(false);
+  // const [dummy, setdummy] = useState(false);
 
   const { register, handleSubmit, setValue, formState: { errors, isValid }, } = useForm({
     defaultValues: { title: "", body: "", },

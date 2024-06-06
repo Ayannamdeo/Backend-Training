@@ -2,10 +2,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-
-import { MainLayout } from "../../components/MainLayout";
-import { login } from "../../services/user";
 import { useContext } from "react";
+
+import { MainLayout } from "../../components";
+import { login } from "../../services/user";
 import { Mycontext } from "../../store/CreateContext";
 
 // eslint-disable-next-line react/prop-types

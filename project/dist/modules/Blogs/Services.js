@@ -28,8 +28,8 @@ class BlogService {
         this.deleteContent = (id) => __awaiter(this, void 0, void 0, function* () {
             return yield this.blogRepository.delete(id);
         });
-        this.getUserBlogs = (userId) => __awaiter(this, void 0, void 0, function* () {
-            return yield this.blogRepository.getByUser(userId);
+        this.getUserBlogs = (userId, sort, offset, limit) => __awaiter(this, void 0, void 0, function* () {
+            return yield this.blogRepository.getByUser(userId, sort, offset, limit);
         });
         this.getDocCount = () => __awaiter(this, void 0, void 0, function* () {
             return yield this.blogRepository.docCount();

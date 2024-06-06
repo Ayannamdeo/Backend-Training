@@ -1,12 +1,10 @@
-import { useQuery, useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 
-import { ArticleCard } from "../../../components/ArticleCard";
 import { getAllBlogPosts, getDocumentCount, likeUnlikePost } from "../../../services/blog";
-import { SkeletonArticleCard } from "../../../components/SkeletonArticleCard";
-import { ErrorMessage } from "../../../components/ErrorMessage";
 import { Mycontext } from "../../../store/CreateContext";
+import { ArticleCard, SkeletonArticleCard, ErrorMessage } from "../../../components"
 
 export function Articles() {
 

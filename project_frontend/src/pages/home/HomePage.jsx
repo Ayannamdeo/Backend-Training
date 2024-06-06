@@ -1,4 +1,4 @@
-import { MainLayout } from "../../components/MainLayout";
+import { MainLayout } from "../../components";
 import { Hero } from "./container/Hero";
 
 export function HomePage() {

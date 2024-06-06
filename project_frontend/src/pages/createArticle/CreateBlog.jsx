@@ -3,14 +3,15 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState, useContext } from "react";
-import { createBlogPost } from "../../services/blog";
-import { MainLayout } from "../../components/MainLayout";
-import { Mycontext } from "../../store/CreateContext";
-import app from "../../firebase";
 import { getStorage, uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
+import app from "../../firebase";
+
+import { createBlogPost } from "../../services/blog";
+import { Mycontext } from "../../store/CreateContext";
+import { MainLayout } from "../../components"
 
 export const CreateBlog = () => {
-  const { isAuth, userId , userName} = useContext(Mycontext);
+  const { isAuth, userId, userName } = useContext(Mycontext);
 
   console.log("inside CreateBlog");
   console.log("isAuth", isAuth);
@@ -20,7 +21,7 @@ export const CreateBlog = () => {
   const navigate = useNavigate();
 
   const { mutate, isLoading } = useMutation({
-    mutationFn: ({ title, body, user, imageUrl, userName}) => {
+    mutationFn: ({ title, body, user, imageUrl, userName }) => {
       return createBlogPost({ title, body, user, imageUrl, userName });
     },
     onSuccess: () => {
@@ -59,7 +60,7 @@ export const CreateBlog = () => {
     const { title, body } = data;
     const user = userId;
     console.log("imageUrl", imageUrl);
-    mutate({ title, body, user, imageUrl , userName});
+    mutate({ title, body, user, imageUrl, userName });
   };
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -97,9 +98,8 @@ export const CreateBlog = () => {
                 },
               })}
               placeholder="Enter Title"
-              className={`w-full p-2 border rounded ${
-                errors.title ? "border-red-500" : "border-[#c3cad9]"
-              }`}
+              className={`w-full p-2 border rounded ${errors.title ? "border-red-500" : "border-[#c3cad9]"
+                }`}
             />
             {errors.title?.message && (
               <p className="text-red-500 text-xs mt-1 ">
@@ -121,9 +121,8 @@ export const CreateBlog = () => {
                 },
               })}
               placeholder="Enter Body"
-              className={`w-full p-2 border rounded ${
-                errors.body ? "border-red-500" : "border-[#c3cad9]"
-              }`}
+              className={`w-full p-2 border rounded ${errors.body ? "border-red-500" : "border-[#c3cad9]"
+                }`}
             ></textarea>
             {errors.body?.message && (
               <p className="text-red-500 text-xs mt-1 ">

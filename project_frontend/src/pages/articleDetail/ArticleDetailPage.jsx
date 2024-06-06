@@ -1,10 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-
-import { BreadCrumbs } from "../../components/BreadCrumbs";
-import { MainLayout } from "../../components/MainLayout";
-import { getSingleBlogPost } from "../../services/blog";
 import toast from "react-hot-toast";
+
+import { BreadCrumbs, MainLayout } from "../../components"
+import { getSingleBlogPost } from "../../services/blog";
 
 const breadData = [
   { name: "Home", link: "/" },

@@ -30,8 +30,13 @@ class BlogService {
     return await this.blogRepository.delete(id);
   };
 
-  getUserBlogs = async (userId: string): Promise<IBlog[] | null> => {
-    return await this.blogRepository.getByUser(userId);
+  getUserBlogs = async (
+    userId: string,
+    sort: string,
+    offset: number,
+    limit: number,
+  ): Promise<{ userPosts: IBlog[]; totalUserPosts: number }> => {
+    return await this.blogRepository.getByUser(userId, sort, offset, limit);
   };
 
   getDocCount = async (): Promise<number> => {

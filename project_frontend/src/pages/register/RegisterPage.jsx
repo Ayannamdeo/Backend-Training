@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
-import { MainLayout } from "../../components/MainLayout";
+import { MainLayout } from "../../components";
 import { signup } from "../../services/user";
 // import { useEffect } from "react";
 

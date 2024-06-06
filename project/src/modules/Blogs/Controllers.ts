@@ -92,12 +92,34 @@ class BlogControllers {
 
   getUserBlogs = async (req: Request, res: Response): Promise<void> => {
     try {
-      const userBlogs = await this.blogService.getUserBlogs(req.params.userid);
-      if (!userBlogs || userBlogs.length === 0) {
+      console.log("req.query inside getUserBlogs: ", req.query);
+      const offset = parseInt(req.query.offset as string) || 0;
+      const limit = parseInt(req.query.limit as string) || 6;
+      const sort = (req.query.sort as string) || "createdAt";
+
+      const result = await this.blogService.getUserBlogs(
+        req.params.userid,
+        sort,
+        offset,
+        limit,
+      );
+      if (!result) {
+        logger.warn(
+          "No Result returned from getUserBlogs Service inside getUserBlogs Controller",
+        );
+        res
+          .status(404)
+          .json({
+            message:
+              "No Result returned from getUserBlogs Service inside getUserBlogs Controller",
+          });
+      }
+      const { userPosts, totalUserPosts } = result;
+      if (!userPosts || userPosts.length === 0) {
         logger.warn("No blogs found for this user");
         res.status(404).json({ message: "No blogs found for this user" });
       } else {
-        res.status(200).json(userBlogs);
+        res.status(200).json({ userPosts, totalUserPosts });
       }
     } catch (error: any) {
       logger.error("error in getUserBlogs Api", error);

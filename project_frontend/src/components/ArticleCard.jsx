@@ -2,7 +2,13 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Mycontext } from "../store/CreateContext";
 
-const ArticleCard = ({ post, showedit, handleLikeUnlike, userId }) => {
+import { HeartIcon as SolidHeartIcon } from "@heroicons/react/24/solid";
+import { HeartIcon as OutlineHeartIcon } from "@heroicons/react/24/outline";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
+
+
+
+const ArticleCard = ({ post, showedit, handleLikeUnlike, userId, showLike = true }) => {
   // const {userName} = useContext(Mycontext);
   // console.log("//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////")
   const { title, createdAt, imageUrl, _id, userName } = post;
@@ -41,8 +47,14 @@ const ArticleCard = ({ post, showedit, handleLikeUnlike, userId }) => {
           <time dateTime={formattedDate}>{formattedDate}</time>
           {/* <img src="https://images.pexels.com/photos/1262302/pexels-photo-1262302.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" className="h-10 w-10 flex-none rounded-full bg-white/10" /> */}
           <p> {userName} </p>
-          <button className="bg-red-500" onClick={handleClick}>{isLiked ? "Unlike" : "Like"}</button>
-          <span> {post.likes.length}</span>
+          {showLike &&
+            <>
+              <button onClick={handleClick}>
+                {isLiked ? (<SolidHeartIcon className="text-red-500 w-6 h-6" />) : (<OutlineHeartIcon className="text-red-500 w-6 h-6" />)}
+              </button>
+              <span className="text-red-500"> {post.likes.length}</span>
+            </>
+          }
 
         </div>
         <h3 className="absolute bottom-20 left-8 right-8 text-lg font-semibold leading-6 text-white">
@@ -51,8 +63,8 @@ const ArticleCard = ({ post, showedit, handleLikeUnlike, userId }) => {
           </Link>
         </h3>
         {showedit ? <div className="absolute top-4 right-4">
-          <Link to={`/edit/${id}`} className="text-indigo-400 underline">
-            Edit
+          <Link to={`/edit/${id}`} className="text-red-400 underline">
+            <PencilSquareIcon className="text-indigo-400 w-7 h-7" />
           </Link>
         </div> : <></>}
 
